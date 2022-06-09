@@ -1,5 +1,6 @@
 package com.example.mysevenminworkout
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.FrameLayout
@@ -15,6 +16,8 @@ class MainActivity : AppCompatActivity() {
         //setContentView(R.layout.activity_main)
         setContentView(binding?.root)
         binding?.flStart?.setOnClickListener{
+            val intent = Intent( this, ExerciseActivity::class.java )
+            startActivity(intent)
 
         }
 
