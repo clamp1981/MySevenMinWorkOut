@@ -12,6 +12,8 @@ class ExerciseActivity : AppCompatActivity() {
     var workOutTimer : CountDownTimer? = null
     var restTime = 10
     var workOutTime = 30
+    var exerciseArray : ArrayList<ExerciseModel>? = null
+    var currentExerciseIndex = -1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityExerciseBinding.inflate(layoutInflater)
@@ -22,9 +24,14 @@ class ExerciseActivity : AppCompatActivity() {
         if( supportActionBar != null ){
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
+
+        exerciseArray = Constants.getDefultExerciseModel()
+
         binding?.toolbarExercise?.setNavigationOnClickListener {
             onBackPressed()
         }
+
+
 
         startRestTimer()
     }
@@ -47,7 +54,8 @@ class ExerciseActivity : AppCompatActivity() {
 
             override fun onFinish() {
                 resetRestTimer()
-                binding?.tvTitle?.text = "Exsercise Name"
+                currentExerciseIndex++;
+                binding?.tvTitle?.text = exerciseArray!![currentExerciseIndex].getName()
                 setWorkOutTimer()
             }
         }.start()
