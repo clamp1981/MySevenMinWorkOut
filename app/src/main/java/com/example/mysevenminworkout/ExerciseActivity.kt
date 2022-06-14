@@ -3,12 +3,16 @@ package com.example.mysevenminworkout
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.example.mysevenminworkout.databinding.ActivityExerciseBinding
 import com.example.mysevenminworkout.databinding.ActivityMainBinding
+import java.util.*
+import kotlin.collections.ArrayList
 
-class ExerciseActivity : AppCompatActivity() {
+class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     var binding : ActivityExerciseBinding? = null
     var restTimer : CountDownTimer? = null
     var workOutTimer : CountDownTimer? = null
@@ -19,10 +23,13 @@ class ExerciseActivity : AppCompatActivity() {
     var currentExerciseIndex = -1
     var nextExerciseIndex = 0
 
+    var tts : TextToSpeech? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityExerciseBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+        tts = TextToSpeech( this, this)
 
         setSupportActionBar(binding?.toolbarExercise)
 
@@ -51,12 +58,13 @@ class ExerciseActivity : AppCompatActivity() {
     }
 
     private fun setRestTimer(){
-        visiblityExerciseControls(false )
+        visibilityExerciseControls(false )
         var restTimerCount = 0;
         binding?.restProgressBar?.max = restTime
         binding?.restProgressBar?.progress = restTime;
         if( nextExerciseIndex < exerciseArray!!.size )
             binding?.tvNextExerciseName?.text = "The next exercise is the \r\n" + exerciseArray!![nextExerciseIndex].getName()
+
 
         restTimer = object  : CountDownTimer( 5000 , 1000 ){
             override fun onTick(p0: Long) {
@@ -79,10 +87,11 @@ class ExerciseActivity : AppCompatActivity() {
 
 
     private fun setWorkOutTimer(){
-        visiblityExerciseControls(true )
+        visibilityExerciseControls(true )
         var workOutTimerCount = 0;
         binding?.workOutProgressBar?.max = workOutTime
         binding?.workOutProgressBar?.progress = workOutTime;
+
         workOutTimer = object  : CountDownTimer( 10000 , 1000 ){
             override fun onTick(p0: Long) {
                 workOutTimerCount++;
@@ -113,7 +122,7 @@ class ExerciseActivity : AppCompatActivity() {
         workOutTimer = null
     }
 
-    private fun visiblityExerciseControls( isExericse : Boolean ){
+    private fun visibilityExerciseControls( isExericse : Boolean ){
         if( isExericse ){
             binding?.llRest?.visibility = View.INVISIBLE
             binding?.llWorkOut?.visibility = View.VISIBLE
@@ -129,6 +138,29 @@ class ExerciseActivity : AppCompatActivity() {
         super.onDestroy()
         resetRestTimer()
         resetWorkOutTimer()
+        if( tts != null ){
+            tts?.stop()
+            tts?.shutdown()
+        }
         binding = null
+    }
+
+    override fun onInit(status: Int) {
+        if( status == TextToSpeech.SUCCESS ){
+            var result = tts?.setLanguage(Locale.US)
+            if( result == TextToSpeech.LANG_MISSING_DATA
+                || result == TextToSpeech.LANG_NOT_SUPPORTED ){
+                Log.e("TTS", "The Language specified is not supported!!")
+            }
+
+        }else{
+            Log.e("TTS", "Initialization Failed!!")
+        }
+
+    }
+
+    private fun speakOut( speak_text : String ){
+        //완전히 초기화 되기 전에 사용하면 not bound to TTS engine 에러남...
+        tts?.speak(speak_text, TextToSpeech.QUEUE_FLUSH, null, "" )
     }
 }
