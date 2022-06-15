@@ -1,5 +1,7 @@
 package com.example.mysevenminworkout
 
+import android.media.MediaPlayer
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -9,6 +11,7 @@ import android.view.View
 import android.widget.Toast
 import com.example.mysevenminworkout.databinding.ActivityExerciseBinding
 import com.example.mysevenminworkout.databinding.ActivityMainBinding
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -18,12 +21,13 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     var workOutTimer : CountDownTimer? = null
     var exerciseArray : ArrayList<ExerciseModel>? = null
 
-    var restTime = 5//10
-    var workOutTime = 10//30
+    var restTime = 10
+    var workOutTime = 30
     var currentExerciseIndex = -1
     var nextExerciseIndex = 0
 
     var tts : TextToSpeech? = null
+    var player : MediaPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +62,13 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     }
 
     private fun setRestTimer(){
+        try{
+            val soundURI = Uri.parse("android.resource://com.example.mysevenminworkout/" + R.raw.play_action )
+            player = MediaPlayer.create( applicationContext, soundURI )
+            player?.isLooping = false;
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
         visibilityExerciseControls(false )
         var restTimerCount = 0;
         binding?.restProgressBar?.max = restTime
@@ -66,11 +77,13 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             binding?.tvNextExerciseName?.text = "The next exercise is the \r\n" + exerciseArray!![nextExerciseIndex].getName()
 
 
-        restTimer = object  : CountDownTimer( 5000 , 1000 ){
+        restTimer = object  : CountDownTimer( 10000 , 1000 ){
             override fun onTick(p0: Long) {
                 restTimerCount++;
                 binding?.restProgressBar?.progress = restTime - restTimerCount;
                 binding?.tvRestTimer?.text = (restTime - restTimerCount).toString()
+                if( restTime - restTimerCount == 5 )
+                    player?.start()
             }
 
             override fun onFinish() {
@@ -92,7 +105,9 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         binding?.workOutProgressBar?.max = workOutTime
         binding?.workOutProgressBar?.progress = workOutTime;
 
-        workOutTimer = object  : CountDownTimer( 10000 , 1000 ){
+
+        speakOut("${exerciseArray!![currentExerciseIndex].getName()}")
+        workOutTimer = object  : CountDownTimer( 30000 , 1000 ){
             override fun onTick(p0: Long) {
                 workOutTimerCount++;
                 binding?.workOutProgressBar?.progress = workOutTime - workOutTimerCount;
@@ -139,8 +154,11 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         resetRestTimer()
         resetWorkOutTimer()
         if( tts != null ){
-            tts?.stop()
-            tts?.shutdown()
+            tts!!.stop()
+            tts!!.shutdown()
+        }
+        if( player!= null){
+            player!!.stop()
         }
         binding = null
     }
