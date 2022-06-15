@@ -87,6 +87,8 @@
             android:text="Next ExerciseName"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:textColor="@color/main_color"
             app:layout_constraintBottom_toTopOf="@+id/flRest"
             app:layout_constraintEnd_toEndOf="parent"
