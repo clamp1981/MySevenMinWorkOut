@@ -9,6 +9,8 @@ import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mysevenminworkout.databinding.ActivityExerciseBinding
 import com.example.mysevenminworkout.databinding.ActivityMainBinding
 import java.lang.Exception
@@ -28,6 +30,8 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     var tts : TextToSpeech? = null
     var player : MediaPlayer? = null
+
+    var exerciseAdapter : ExerciseStatusAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +53,15 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
 
         startRestTimer()
+        setupExerciseStatusRecyclerView()
+    }
+
+    private  fun setupExerciseStatusRecyclerView(){
+        binding?.rvExerciseStatus?.layoutManager =
+            LinearLayoutManager( this, LinearLayoutManager.HORIZONTAL, false )
+
+        exerciseAdapter = ExerciseStatusAdapter( exerciseArray!!)
+        binding?.rvExerciseStatus?.adapter = exerciseAdapter
     }
 
     private fun startRestTimer() {
