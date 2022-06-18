@@ -71,6 +71,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private fun startWorkOutTimer() {
         resetWorkOutTimer()
+
         setWorkOutTimer()
     }
 
@@ -104,6 +105,8 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                     currentExerciseIndex++
                     nextExerciseIndex++
                     binding?.tvExerciseName?.text = exerciseArray!![currentExerciseIndex].getName()
+                    exerciseArray!![currentExerciseIndex].setSelected(true)
+                    exerciseAdapter!!.notifyDataSetChanged() //adapter에 알려주기
                     startWorkOutTimer()
                 }
 
@@ -128,8 +131,14 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             }
 
             override fun onFinish() {
-                if( currentExerciseIndex < exerciseArray!!.size - 1 )
+                if( currentExerciseIndex < exerciseArray!!.size - 1 ){
+                    exerciseArray!![currentExerciseIndex].setSelected(false)
+                    exerciseArray!![currentExerciseIndex].setCompleted(true)
+
+                    exerciseAdapter!!.notifyDataSetChanged() //adapter에 알려주기
                     startRestTimer()
+                }
+
                 else{
                     Toast.makeText(this@ExerciseActivity, "운동 끝", Toast.LENGTH_LONG).show()
                 }
