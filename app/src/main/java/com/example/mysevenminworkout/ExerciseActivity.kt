@@ -1,5 +1,6 @@
 package com.example.mysevenminworkout
 
+import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -44,12 +45,13 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         if( supportActionBar != null ){
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
-
-        exerciseArray = Constants.getDefultExerciseModel()
-
         binding?.toolbarExercise?.setNavigationOnClickListener {
             onBackPressed()
         }
+
+        exerciseArray = Constants.getDefultExerciseModel()
+
+
 
 
         startRestTimer()
@@ -123,7 +125,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
 
         speakOut("${exerciseArray!![currentExerciseIndex].getName()}")
-        workOutTimer = object  : CountDownTimer( 30000 , 1000 ){
+        workOutTimer = object  : CountDownTimer( 10000 , 1000 ){
             override fun onTick(p0: Long) {
                 workOutTimerCount++;
                 binding?.workOutProgressBar?.progress = workOutTime - workOutTimerCount;
@@ -137,10 +139,10 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
                     exerciseAdapter!!.notifyDataSetChanged() //adapter에 알려주기
                     startRestTimer()
-                }
-
-                else{
-                    Toast.makeText(this@ExerciseActivity, "운동 끝", Toast.LENGTH_LONG).show()
+                }else{
+                    finish()
+                    val intent = Intent( this@ExerciseActivity, FinishActivity::class.java )
+                    startActivity(intent)
                 }
 
             }
