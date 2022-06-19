@@ -30,7 +30,7 @@ class ExerciseStatusAdapter(val items :ArrayList<ExerciseModel>) :
             model.getSelected() -> {
                 holder.tvItem.background =
                     ContextCompat.getDrawable( holder.itemView.context,
-                    R.drawable.item_circular_color_accent_border )
+                    R.drawable.item_circular_color_current_accent_border )
 
             }
             //완료 되었을때.
