@@ -1,5 +1,6 @@
 package com.example.mysevenminworkout
 
+import android.app.Dialog
 import android.content.Intent
 import android.media.MediaPlayer
 import android.net.Uri
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mysevenminworkout.databinding.ActivityExerciseBinding
 import com.example.mysevenminworkout.databinding.ActivityMainBinding
+import com.example.mysevenminworkout.databinding.DialogCustomBackConfirmationBinding
 import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
@@ -58,6 +60,27 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         setupExerciseStatusRecyclerView()
     }
 
+    override fun onBackPressed() {
+        customDialogBackButton()
+        //
+    }
+
+    private fun customDialogBackButton(){
+        val customDialog = Dialog( this )
+        val dialogBinding = DialogCustomBackConfirmationBinding.inflate(layoutInflater)
+        customDialog.setContentView(dialogBinding?.root)
+        customDialog.setCanceledOnTouchOutside(false)
+        dialogBinding.btnYes.setOnClickListener{
+            this@ExerciseActivity.finish()
+            customDialog.dismiss()
+        }
+
+        dialogBinding.btnNo.setOnClickListener{
+            customDialog.dismiss()
+        }
+        customDialog.show()
+    }
+
     private  fun setupExerciseStatusRecyclerView(){
         binding?.rvExerciseStatus?.layoutManager =
             LinearLayoutManager( this, LinearLayoutManager.HORIZONTAL, false )
@@ -73,7 +96,6 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private fun startWorkOutTimer() {
         resetWorkOutTimer()
-
         setWorkOutTimer()
     }
 
