@@ -12,7 +12,7 @@
         android:theme="@style/ToolbarTheme"
         android:layout_height="?android:attr/actionBarSize"
         android:background="@color/white"
-        app:titleTextColor="@color/black"
+        app:titleTextColor="@color/toolbar_color"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <LinearLayout
