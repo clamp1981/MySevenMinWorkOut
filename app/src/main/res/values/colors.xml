@@ -8,6 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="toolbar_color_control_normal">#000000</color>
-    <color name="main_color">#F38A0B</color>
-    <color name="enable_main_color">#FF837564</color>
+    <color name="main_color">#F15A9E</color>
+    <color name="enable_main_color">#D7D4E3</color>
+    <color name="bmi_color">#473080</color>
+    <color name="toolbar_color">#1D0D47</color>
 </resources>
