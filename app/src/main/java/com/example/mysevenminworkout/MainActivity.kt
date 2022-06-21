@@ -21,6 +21,11 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        binding?.flBMI?.setOnClickListener{
+            val intent = Intent( this, BMICalculatorActivity::class.java )
+            startActivity(intent)
+        }
+
 //        val btnStart : FrameLayout = findViewById(R.id.flStart )
 //        btnStart.setOnClickListener{
 //
