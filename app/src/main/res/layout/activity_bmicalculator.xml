@@ -15,8 +15,46 @@
         app:titleTextColor="@color/toolbar_color"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <com.google.android.material.textfield.TextInputLayout
+    <RadioGroup
+        android:id="@+id/rgUnits"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/toolbarBMICalculator"
+        android:layout_margin="10dp"
+        android:background="@drawable/radio_group_tab_background"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/rbMetricUnit"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="0.50"
+            android:background="@drawable/radio_units_tab_selector"
+            android:checked="true"
+            android:button="@null"
+            android:gravity="center"
+            android:text="Metric Uint"
+            android:textColor="@drawable/radio_units_tab_text_color_selector"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+        <RadioButton
+            android:id="@+id/rbUSUnit"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="0.50"
+            android:background="@drawable/radio_units_tab_selector"
+            android:textColor="@drawable/radio_units_tab_text_color_selector"
+            android:checked="false"
+            android:button="@null"
+            android:gravity="center"
+            android:text="US Uint"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+
+    </RadioGroup>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_below="@id/rgUnits"
         android:id="@+id/tilMetricUnitWeight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
