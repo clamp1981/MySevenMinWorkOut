@@ -53,48 +53,130 @@
 
     </RadioGroup>
 
-    <com.google.android.material.textfield.TextInputLayout
+    <RelativeLayout
+        android:id="@+id/rlMetricUnit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/rgUnits"
-        android:id="@+id/tilMetricUnitWeight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:boxStrokeColor="@color/main_color"
-        app:hintTextColor="@color/main_color"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etBMIWeight"
+        android:visibility="invisible"
+        tools:visibility="invisible">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilMetricUnitWeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="WEIGHT(in KG)"
-            android:inputType="numberDecimal"
-            android:textSize="16sp"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_margin="10dp"
+            app:boxStrokeColor="@color/main_color"
+            app:hintTextColor="@color/main_color"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etBMIWeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="WEIGHT(in KG)"
+                android:inputType="numberDecimal"
+                android:textSize="16sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_below="@id/tilMetricUnitWeight"
-        android:id="@+id/tilMetricUnitHeight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:boxStrokeColor="@color/main_color"
-        app:hintTextColor="@color/main_color"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etBMIHeight"
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_below="@id/tilMetricUnitWeight"
+            android:id="@+id/tilMetricUnitHeight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="HEIGHT(in CM)"
-            android:inputType="numberDecimal"
-            android:textSize="16sp"/>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_margin="10dp"
+            app:boxStrokeColor="@color/main_color"
+            app:hintTextColor="@color/main_color"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etBMIHeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="HEIGHT(in CM)"
+                android:inputType="numberDecimal"
+                android:textSize="16sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlUSUnit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rgUnits"
+        android:visibility="invisible"
+        tools:visibility="visible">
+        <com.google.android.material.textfield.TextInputLayout
+
+            android:id="@+id/tilUSUnitWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:boxStrokeColor="@color/main_color"
+            app:hintTextColor="@color/main_color"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etBMIUSWeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="WEIGHT(in pound)"
+                android:inputType="numberDecimal"
+                android:textSize="16sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View
+            android:id="@+id/View"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_below="@+id/tilUSUnitWeight"
+            android:layout_centerHorizontal="true"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_below="@id/tilUSUnitWeight"
+            android:id="@+id/tilUSUnitHeightFeet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/View"
+            android:layout_margin="10dp"
+            app:boxStrokeColor="@color/main_color"
+            app:hintTextColor="@color/main_color"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etBMIUSHeightFeet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="in Feet"
+                android:inputType="numberDecimal"
+                android:textSize="16sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_below="@id/tilUSUnitWeight"
+            android:id="@+id/tilUSUnitHeightInch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_toEndOf="@+id/View"
+            app:boxStrokeColor="@color/main_color"
+            app:hintTextColor="@color/main_color"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etBMIUSHeightInch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="in Inch"
+                android:inputType="numberDecimal"
+                android:textSize="16sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </RelativeLayout>
+
+
 
     <RelativeLayout
         android:id="@+id/rlBMIResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_below="@id/tilMetricUnitHeight"
+        android:layout_below="@id/rlMetricUnit"
         android:visibility="invisible"
         tools:visibility="visible">
 
