@@ -24,25 +24,80 @@ class BMICalculatorActivity : AppCompatActivity() {
             supportActionBar?.setTitle(R.string.bmi_toolbar_title_name)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
+
+
+        displayMetricBIM()
+
         binding?.toolbarBMICalculator?.setNavigationOnClickListener {
             onBackPressed()
         }
 
+
         binding?.tvBMILabel?.text = "Your BMI"
 
+        binding?.rgUnits?.setOnCheckedChangeListener { _, checkedId : Int ->
+            if( checkedId == R.id.rbMetricUnit ) {
+                displayMetricBIM()
+            }else{
+                displayUSBIM()
+            }
+
+        }
+
         binding?.btnCalculate?.setOnClickListener{
-            if( !validateMetricUnity() )
+            if( !validateBMIUnity() )
                 Toast.makeText(this@BMICalculatorActivity,
                     "Input the Weight and Height values!.", Toast.LENGTH_SHORT).show()
 
             //자신의 몸무게를 키의 제곱으로 나누는 것
+            //val weight = binding?.etBMIWeight?.text.toString().toFloat()
+            //val height = binding?.etBMIHeight?.text.toString().toFloat() / 100
+
+            //val bmi = weight / ( height * height )
+            displayBMIResult( calculateBMI() )
+        }
+
+    }
+    private fun calculateBMI() : Float {
+        var bmi : Float = 0.0f
+        if( binding?.rbMetricUnit?.isChecked == true ){
             val weight = binding?.etBMIWeight?.text.toString().toFloat()
             val height = binding?.etBMIHeight?.text.toString().toFloat() / 100
 
-            val bmi = weight / ( height * height )
-            displayBMIResult( bmi )
+            bmi = weight / ( height * height )
+
+        }else{
+            var feetTocm = binding?.etBMIUSHeightFeet?.text.toString().toFloat() * 30.48f
+            var inchTocm = binding?.etBMIUSHeightInch?.text.toString().toFloat() * 2.54f
+            val weight = binding?.etBMIUSWeight?.text.toString().toFloat() * 0.45359237f
+            val height = (feetTocm +inchTocm)  / 100
+            bmi = weight / ( height * height )
         }
 
+        return bmi
+    }
+
+    private fun displayMetricBIM(){
+        initBMIData()
+        binding?.rlMetricUnit?.visibility = View.VISIBLE
+        binding?.rlUSUnit?.visibility = View.INVISIBLE
+
+    }
+
+    private fun displayUSBIM(){
+        initBMIData()
+        binding?.rlMetricUnit?.visibility = View.INVISIBLE
+        binding?.rlUSUnit?.visibility = View.VISIBLE
+
+    }
+
+    private fun initBMIData(){
+        binding?.etBMIWeight?.setText("")
+        binding?.etBMIHeight?.setText("")
+        binding?.etBMIUSWeight?.setText("")
+        binding?.etBMIUSHeightInch?.setText("")
+        binding?.etBMIUSHeightFeet?.setText("")
+        binding?.rlBMIResult?.visibility = View.INVISIBLE
     }
 
     private fun displayBMIResult(  bmi : Float ){
@@ -76,12 +131,23 @@ class BMICalculatorActivity : AppCompatActivity() {
 
     }
 
-    private fun validateMetricUnity() : Boolean {
+    private fun validateBMIUnity() : Boolean {
         var isValidate = true
 
-        if( binding?.etBMIWeight?.text.toString().isEmpty()
-            || binding?.etBMIHeight?.text.toString().isEmpty() )
+        if( binding?.rbMetricUnit?.isChecked == true ){
+            if( binding?.etBMIWeight?.text.toString().isEmpty()
+                || binding?.etBMIHeight?.text.toString().isEmpty() )
                 isValidate = false
+        }
+
+        else{
+            if( binding?.etBMIUSWeight?.text.toString().isEmpty()
+                || binding?.etBMIUSHeightFeet?.text.toString().isEmpty()
+                || binding?.etBMIUSHeightInch?.text.toString().isEmpty())
+                isValidate = false
+        }
+
+
 
         return  isValidate
     }
