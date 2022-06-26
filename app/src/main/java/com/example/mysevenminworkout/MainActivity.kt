@@ -26,6 +26,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding?.flHistory?.setOnClickListener {
+            val intent = Intent(this, HistoryActivity::class.java)
+            startActivity(intent)
+        }
+
 //        val btnStart : FrameLayout = findViewById(R.id.flStart )
 //        btnStart.setOnClickListener{
 //
