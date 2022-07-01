@@ -26,8 +26,8 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     var workOutTimer : CountDownTimer? = null
     var exerciseArray : ArrayList<ExerciseModel>? = null
 
-    var restTime = 10
-    var workOutTime = 30
+    var restTime = 5
+    var workOutTime = 10
     var currentExerciseIndex = -1
     var nextExerciseIndex = 0
 
@@ -115,7 +115,7 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             binding?.tvNextExerciseName?.text = "The next exercise is the \r\n" + exerciseArray!![nextExerciseIndex].getName()
 
 
-        restTimer = object  : CountDownTimer( 10000 , 1000 ){
+        restTimer = object  : CountDownTimer( 5000 , 1000 ){
             override fun onTick(p0: Long) {
                 restTimerCount++;
                 binding?.restProgressBar?.progress = restTime - restTimerCount;
@@ -192,7 +192,6 @@ class ExerciseActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             binding?.llWorkOut?.visibility = View.INVISIBLE
 
         }
-
     }
 
     override fun onDestroy() {
