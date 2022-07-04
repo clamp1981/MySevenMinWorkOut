@@ -3,7 +3,9 @@ package com.example.mysevenminworkout
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mysevenminworkout.databinding.ActivityBmicalculatorBinding
 import com.example.mysevenminworkout.databinding.ActivityHistoryBinding
 import kotlinx.coroutines.flow.collect
@@ -40,8 +42,24 @@ class HistoryActivity : AppCompatActivity() {
     private fun getAllCompleteDate( historyDao : HistoryDao ){
         lifecycleScope.launch {
             historyDao.fetchAllHistories().collect { alldatelist ->
-                for( i in alldatelist ){
-                    Log.e("date:","" + i)
+                if( alldatelist.isNotEmpty() ){
+                    binding?.tvHistory?.visibility = View.VISIBLE
+                    binding?.rvHistory?.visibility = View.VISIBLE
+                    binding?.tvNoDataHistory?.visibility = View.GONE
+
+                    binding?.rvHistory?.layoutManager = LinearLayoutManager( this@HistoryActivity )
+                    val dates = ArrayList<String>()
+                    for( date in alldatelist )
+                        dates.add(date.data)
+
+                    val historyAdapter = HistoryAdapter( ArrayList(dates ))
+                    binding?.rvHistory?.adapter = historyAdapter
+
+                }else{
+                    binding?.tvHistory?.visibility = View.GONE
+                    binding?.rvHistory?.visibility = View.GONE
+                    binding?.tvNoDataHistory?.visibility = View.VISIBLE
+
                 }
 
             }

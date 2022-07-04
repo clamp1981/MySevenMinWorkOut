@@ -1,27 +1,31 @@
 package com.example.mysevenminworkout
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mysevenminworkout.databinding.ItemHistoryRowBinding
 
-class HistoryAdapter : RecyclerView.Adapter<HistoryAdapter.viewHolder>() {
+class HistoryAdapter(private val items : ArrayList<String>): RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
 
-    class viewHolder ( binding : ItemHistoryRowBinding ) : RecyclerView.ViewHolder( binding.root ){
+    class ViewHolder ( binding : ItemHistoryRowBinding ) : RecyclerView.ViewHolder( binding.root ){
         val llHistoryMain = binding.llHistoryItem
         val tvPosition = binding.tvPosition
         val tvItem = binding.tvItem
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): viewHolder {
-        TODO("Not yet implemented")
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder( ItemHistoryRowBinding.inflate(LayoutInflater.from(parent.context), parent, false ) )
     }
 
-    override fun onBindViewHolder(holder: viewHolder, position: Int) {
-        TODO("Not yet implemented")
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val date : String = items.get( position )
+        holder.tvPosition.text = (position + 1).toString()
+        holder.tvItem.text = date
+
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return items.size
     }
 
 }
