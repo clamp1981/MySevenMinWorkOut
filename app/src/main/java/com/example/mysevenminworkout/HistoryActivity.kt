@@ -24,6 +24,12 @@ class HistoryActivity : AppCompatActivity() {
         val historyDao = (application as WorkOutApp).db.HistoryDao()
         getAllCompleteDate( historyDao )
 
+        binding?.btnReset?.setOnClickListener{
+            deleteAllCompleteData(historyDao)
+            getAllCompleteDate( historyDao )
+
+        }
+
     }
 
     private fun initToolbar(){
@@ -63,6 +69,13 @@ class HistoryActivity : AppCompatActivity() {
                 }
 
             }
+        }
+    }
+
+
+    private fun deleteAllCompleteData( historyDao : HistoryDao){
+        lifecycleScope.launch {
+            historyDao.deleteAllHistories()
         }
     }
 

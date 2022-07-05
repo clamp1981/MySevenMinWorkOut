@@ -5,7 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mysevenminworkout.databinding.ItemHistoryRowBinding
 
-class HistoryAdapter(private val items : ArrayList<String>): RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
+class HistoryAdapter(private val items : ArrayList<String> )
+    : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
 
     class ViewHolder ( binding : ItemHistoryRowBinding ) : RecyclerView.ViewHolder( binding.root ){
         val llHistoryMain = binding.llHistoryItem

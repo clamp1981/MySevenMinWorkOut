@@ -13,6 +13,10 @@ interface HistoryDao {
     @Update
     suspend fun update( historyEntity: HistoryEntity )
 
+
     @Query( "SELECT * FROM 'history-table'")
     fun fetchAllHistories(): Flow<List<HistoryEntity>>
+
+    @Query( "DELETE FROM 'history-table'")
+    suspend fun deleteAllHistories()
 }
